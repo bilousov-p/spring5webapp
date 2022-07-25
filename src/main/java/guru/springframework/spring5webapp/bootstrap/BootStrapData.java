@@ -25,24 +25,6 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Author ericAuthor = new Author("Eric", "Evans");
-        Book dddBook = new Book("Domain Driven Design", "123123");
-
-        ericAuthor.getBooks().add(dddBook);
-        dddBook.getAuthors().add(ericAuthor);
-
-        authorRepository.save(ericAuthor);
-        bookRepository.save(dddBook);
-
-        Author rodAuthor = new Author("Rod", "Johnson");
-        Book noEJBBook = new Book("J2EE Development without EJB", "232323");
-
-        rodAuthor.getBooks().add(noEJBBook);
-        noEJBBook.getAuthors().add(rodAuthor);
-
-        authorRepository.save(rodAuthor);
-        bookRepository.save(noEJBBook);
-
         Publisher newPublisher = new Publisher(
                 "New publisher",
                 "Ave",
@@ -50,6 +32,32 @@ public class BootStrapData implements CommandLineRunner {
                 "Washington",
                 "001");
 
+        publisherRepository.save(newPublisher);
+
+        Author ericAuthor = new Author("Eric", "Evans");
+        Book dddBook = new Book("Domain Driven Design", "123123");
+
+        ericAuthor.getBooks().add(dddBook);
+        dddBook.getAuthors().add(ericAuthor);
+        dddBook.setPublisher(newPublisher);
+
+        newPublisher.getBooks().add(dddBook);
+
+        authorRepository.save(ericAuthor);
+        bookRepository.save(dddBook);
+        publisherRepository.save(newPublisher);
+
+        Author rodAuthor = new Author("Rod", "Johnson");
+        Book noEJBBook = new Book("J2EE Development without EJB", "232323");
+
+        rodAuthor.getBooks().add(noEJBBook);
+        noEJBBook.getAuthors().add(rodAuthor);
+        noEJBBook.setPublisher(newPublisher);
+
+        newPublisher.getBooks().add(noEJBBook);
+
+        authorRepository.save(rodAuthor);
+        bookRepository.save(noEJBBook);
         publisherRepository.save(newPublisher);
 
         System.out.println("Started in bootstrap");
